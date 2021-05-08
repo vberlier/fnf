@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field
-from typing import Dict, Optional, cast
+from dataclasses import dataclass
+from typing import Optional, cast
 from xml.etree import ElementTree
 
 from beet import Context, Model, Texture
@@ -23,7 +23,7 @@ def beet_default(ctx: Context):
 
 
 def sprite_override(ctx: Context):
-    sprite_manager = ctx.inject(SpriteManager)
+    ctx.meta["sprite_overrides"] = {}
 
     yield
 
@@ -33,7 +33,7 @@ def sprite_override(ctx: Context):
             "textures": {"layer0": "minecraft:item/diamond_hoe"},
             "overrides": [
                 {"predicate": {"custom_model_data": custom_data}, "model": model_name}
-                for model_name, custom_data in sprite_manager.overrides.items()
+                for model_name, custom_data in ctx.meta["sprite_overrides"].items()
             ],
         }
     )
@@ -50,8 +50,6 @@ class TextureAtlasInfo(BaseModel):
 class SpriteManager:
     ctx: Context
 
-    overrides: Dict[str, int] = field(default_factory=dict)
-
     def load(
         self,
         name: str,
@@ -64,6 +62,7 @@ class SpriteManager:
 
         cache = self.ctx.cache[__name__]
         generate = self.ctx.generate["sprite"]
+        overrides = self.ctx.meta["sprite_overrides"]
 
         original = Image.open(cache.download(texture_url))
 
@@ -92,7 +91,7 @@ class SpriteManager:
                     display,
                 )
                 model_name = generate[name](normalize_string(sprite_name), model)
-                self.overrides[model_name] = len(self.overrides)
+                overrides[model_name] = len(overrides)
         else:
             model = self.create_sprite(
                 texture_name,
@@ -105,7 +104,7 @@ class SpriteManager:
                 display,
             )
             model_name = generate(name, model)
-            self.overrides[model_name] = len(self.overrides)
+            overrides[model_name] = len(overrides)
 
     @staticmethod
     def create_sprite(
