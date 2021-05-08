@@ -1,0 +1,12 @@
+{
+  "pipeline": ["fnf.sprite"],
+  "meta": {
+    "sprite": {
+      "arrows": {
+        "texture": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/faaf064e37d5a150d8aba451d740eeb81bd2e974/assets/shared/images/NOTE_assets.png",
+        "atlas": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/faaf064e37d5a150d8aba451d740eeb81bd2e974/assets/shared/images/NOTE_assets.xml",
+        "scale": 20
+      }
+    }
+  }
+}
