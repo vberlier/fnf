@@ -1,12 +1,37 @@
 {
-  "pipeline": ["fnf.sprite"],
+  "output": "out",
+  "require": [
+    "beet.contrib.inline_function",
+    "beet.contrib.inline_function_tag",
+    "fnf.dundervar"
+  ],
+  "data_pack": {
+    "load": ["src", "vendor/wasd_arithmetic"]
+  },
+  "pipeline": [
+    "fnf.sprite",
+    "beet.contrib.render",
+    "beet.contrib.hangman",
+    "beet.contrib.scoreboard"
+  ],
   "meta": {
     "sprite": {
       "arrows": {
-        "texture": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/faaf064e37d5a150d8aba451d740eeb81bd2e974/assets/shared/images/NOTE_assets.png",
-        "atlas": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/faaf064e37d5a150d8aba451d740eeb81bd2e974/assets/shared/images/NOTE_assets.xml",
-        "scale": 20
+        "texture": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/NOTE_assets.png",
+        "atlas": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/NOTE_assets.xml",
+        "scale": 11.2,
+        "display": {
+          "scale": [2, 2, 2]
+        }
       }
+    },
+    "render": {
+      "data_pack": {
+        "functions": ["fnf:*"]
+      }
+    },
+    "hangman": {
+      "match": ["fnf:*"]
     }
   }
 }
