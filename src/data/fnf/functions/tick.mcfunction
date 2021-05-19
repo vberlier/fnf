@@ -12,7 +12,9 @@ execute as @p[nbt={RootVehicle: {}}] at @s run commands
 
         #!for arrow in ["up", "down", "left", "right"]
         #!set confirm = generate_objective("confirm." ~ arrow)
+        #!set press = generate_objective("press." ~ arrow)
         scoreboard players set @s __confirm__ -1
+        scoreboard players set @s __press__ -1
         #!endfor
 
         tag @s add fnf.riding

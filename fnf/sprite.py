@@ -18,7 +18,6 @@ def beet_default(ctx: Context):
             texture_url=options["texture"],
             atlas_url=options.get("atlas"),
             scale=options.get("scale", 1),
-            display=options.get("display"),
         )
 
 
@@ -56,7 +55,6 @@ class SpriteManager:
         texture_url: str,
         atlas_url: Optional[str] = None,
         scale: float = 1,
-        display: Optional[JsonDict] = None,
     ):
         self.ctx.require(sprite_override)
 
@@ -81,27 +79,13 @@ class SpriteManager:
 
             for sprite_name, info in sorted(sprites.items()):
                 model = self.create_sprite(
-                    texture_name,
-                    info.x,
-                    info.y,
-                    info.width,
-                    info.height,
-                    size,
-                    scale,
-                    display,
+                    texture_name, info.x, info.y, info.width, info.height, size, scale
                 )
                 model_name = generate[name](normalize_string(sprite_name), model)
                 overrides[model_name] = len(overrides)
         else:
             model = self.create_sprite(
-                texture_name,
-                0,
-                0,
-                original.width,
-                original.height,
-                size,
-                scale,
-                display,
+                texture_name, 0, 0, original.width, original.height, size, scale
             )
             model_name = generate(name, model)
             overrides[model_name] = len(overrides)
@@ -115,7 +99,6 @@ class SpriteManager:
         height: float,
         size: float,
         scale: float,
-        display: Optional[JsonDict] = None,
     ) -> Model:
         factor = 16 / size
         uv = x * factor, y * factor, (x + width) * factor, (y + height) * factor
@@ -142,8 +125,5 @@ class SpriteManager:
                 ],
             }
         )
-
-        if display:
-            model.data["display"] = {"head": display}
 
         return model

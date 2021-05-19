@@ -6,6 +6,7 @@ function wasd:_wasd/mounted
 
 #!set wasd = "wasd." ~ wasd_directions[arrow]
 #!set confirm = generate_objective("confirm." ~ arrow)
+#!set press = generate_objective("press." ~ arrow)
 
 execute if entity @s[tag=__wasd__] run commands
     scoreboard players set @s[scores={__confirm__=-1}] __confirm__ 0

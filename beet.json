@@ -10,6 +10,7 @@
   },
   "pipeline": [
     "fnf.sprite",
+    "fnf.display",
     "beet.contrib.render",
     "beet.contrib.hangman",
     "beet.contrib.scoreboard"
@@ -19,12 +20,31 @@
       "arrows": {
         "texture": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/NOTE_assets.png",
         "atlas": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/NOTE_assets.xml",
-        "scale": 11.2,
-        "display": {
-          "scale": [2, 2, 2]
-        }
+        "scale": 11.2
       }
     },
+    "display": [
+      {
+        "match": ["fnf:sprite/arrows/arrow*"],
+        "head": {
+          "scale": [2, 2, 2]
+        }
+      },
+      {
+        "match": ["fnf:sprite/arrows/*_confirm*"],
+        "head": {
+          "scale": [1.5, 1.5, 1.5],
+          "translation": [-2.5, -2.5, 0]
+        }
+      },
+      {
+        "match": ["fnf:sprite/arrows/*_press*"],
+        "head": {
+          "scale": [2.3, 2.3, 2.3],
+          "translation": [0.5, 0.5, 0]
+        }
+      }
+    ],
     "render": {
       "data_pack": {
         "functions": ["fnf:*"]
