@@ -11,6 +11,7 @@
   "pipeline": [
     "fnf.sprite",
     "fnf.display",
+    "fnf.song",
     "beet.contrib.render",
     "beet.contrib.hangman",
     "beet.contrib.scoreboard"
@@ -21,6 +22,11 @@
         "texture": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/NOTE_assets.png",
         "atlas": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/NOTE_assets.xml",
         "scale": 11.2
+      },
+      "bf": {
+        "texture": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/BOYFRIEND.png",
+        "atlas": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/shared/images/BOYFRIEND.xml",
+        "scale": 25
       }
     },
     "display": [
@@ -43,8 +49,25 @@
           "scale": [2.3, 2.3, 2.3],
           "translation": [0.5, 0.5, 0]
         }
+      },
+      {
+        "match": ["fnf:sprite/bf/*"],
+        "head": {
+          "scale": [4, 4, 4]
+        }
       }
     ],
+    "song": {
+      "tutorial": {
+        "inst": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/songs/tutorial/Inst.ogg",
+        "notes": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/preload/data/tutorial/tutorial.json"
+      },
+      "milf": {
+        "inst": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/songs/milf/Inst.ogg",
+        "voices": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/songs/milf/Voices.ogg",
+        "notes": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/preload/data/milf/milf.json"
+      }
+    },
     "render": {
       "data_pack": {
         "functions": ["fnf:*"]
