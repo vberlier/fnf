@@ -37,6 +37,17 @@
         }
       },
       {
+        "match": [
+          "fnf:sprite/arrows/red0000",
+          "fnf:sprite/arrows/blue0000",
+          "fnf:sprite/arrows/purple0000",
+          "fnf:sprite/arrows/green0000"
+        ],
+        "head": {
+          "scale": [2, 2, 2]
+        }
+      },
+      {
         "match": ["fnf:sprite/arrows/*_confirm*"],
         "head": {
           "scale": [1.5, 1.5, 1.5],
@@ -60,12 +71,14 @@
     "song": {
       "tutorial": {
         "inst": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/songs/tutorial/Inst.ogg",
-        "notes": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/preload/data/tutorial/tutorial.json"
+        "notes": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/preload/data/tutorial/tutorial.json",
+        "speed": 1.5
       },
       "milf": {
         "inst": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/songs/milf/Inst.ogg",
         "voices": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/songs/milf/Voices.ogg",
-        "notes": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/preload/data/milf/milf.json"
+        "notes": "https://raw.githubusercontent.com/ninjamuffin99/Funkin/master/assets/preload/data/milf/milf.json",
+        "speed": 3
       }
     },
     "render": {
