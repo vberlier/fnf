@@ -130,7 +130,7 @@ class SpriteManager:
         scale: float,
     ) -> Model:
         factor = 16 / size
-        uv = x * factor, y * factor, (x + width) * factor, (y + height) * factor
+        uv = [x * factor, y * factor, (x + width) * factor, (y + height) * factor]
 
         width *= scale
         height *= scale
