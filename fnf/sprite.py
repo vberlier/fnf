@@ -68,14 +68,7 @@ class SpriteManager:
         texture_path = cache.download(texture_url)
         atlas_path = cache.download(atlas_url) if atlas_url else None
 
-        last_modified = [
-            texture_path.lstat().st_mtime,
-            atlas_path.lstat().st_mtime if atlas_path else 0,
-        ]
-
-        if cache.json.get(f"{name}-last_modified") != last_modified:
-            cache.json[f"{name}-last_modified"] = last_modified
-
+        if cache.has_changed(texture_path, atlas_path):
             logger.info("Updating assets for %s", name)
             assets = self.create_assets(name, texture_path, atlas_path, scale)
             assets.save(path=cache.get_path(f"{name}-resource_pack"), overwrite=True)

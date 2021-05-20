@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-beet = "^0.24.1"
+beet = "^0.25.0"
 lectern = "^0.13.0"
 
 [tool.poetry.dev-dependencies]
