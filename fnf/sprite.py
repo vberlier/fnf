@@ -1,11 +1,15 @@
 from dataclasses import dataclass
+from logging import getLogger
+from pathlib import Path
 from typing import Optional, cast
 from xml.etree import ElementTree
 
-from beet import Context, Model, Texture
+from beet import Context, Model, ResourcePack, Texture
 from beet.core.utils import JsonDict, normalize_string
 from PIL import Image
 from pydantic import BaseModel
+
+logger = getLogger(__name__)
 
 
 def beet_default(ctx: Context):
@@ -58,20 +62,52 @@ class SpriteManager:
     ):
         self.ctx.require(sprite_override)
 
-        cache = self.ctx.cache[__name__]
-        generate = self.ctx.generate["sprite"]
+        cache = self.ctx.cache["sprite"]
         overrides = self.ctx.meta["sprite_overrides"]
 
-        original = Image.open(cache.download(texture_url))
+        texture_path = cache.download(texture_url)
+        atlas_path = cache.download(atlas_url) if atlas_url else None
+
+        last_modified = [
+            texture_path.lstat().st_mtime,
+            atlas_path.lstat().st_mtime if atlas_path else 0,
+        ]
+
+        if cache.json.get(f"{name}-last_modified") != last_modified:
+            cache.json[f"{name}-last_modified"] = last_modified
+
+            logger.info("Updating assets for %s", name)
+            assets = self.create_assets(name, texture_path, atlas_path, scale)
+            assets.save(path=cache.get_path(f"{name}-resource_pack"), overwrite=True)
+        else:
+            logger.info("Using cached assets for %s", name)
+            assets = ResourcePack(path=cache.get_path(f"{name}-resource_pack"))
+
+        for key in sorted(assets.models):
+            overrides[key] = len(overrides)
+
+        self.ctx.assets.merge(assets)
+
+    def create_assets(
+        self,
+        name: str,
+        texture_path: Path,
+        atlas_path: Optional[Path] = None,
+        scale: float = 1,
+    ) -> ResourcePack:
+        assets = ResourcePack()
+
+        original = Image.open(texture_path)
 
         size = max(original.size)
         square = Image.new("RGBA", (size, size), (0, 0, 0, 0))
         square.paste(original, (0, 0))
 
-        texture_name = generate(name, Texture(square))
+        texture_name = f"fnf:sprite/{name}"
+        assets[texture_name] = Texture(square)
 
-        if atlas_url:
-            texture_atlas = ElementTree.parse(cache.download(atlas_url))
+        if atlas_path:
+            texture_atlas = ElementTree.parse(atlas_path)
             sprites = {
                 texture_info.attrib["name"]: TextureAtlasInfo(**texture_info.attrib)
                 for texture_info in texture_atlas.getroot()
@@ -81,17 +117,17 @@ class SpriteManager:
                 model = self.create_sprite(
                     texture_name, info.x, info.y, info.width, info.height, size, scale
                 )
-                model_name = generate[name](normalize_string(sprite_name), model)
-                overrides[model_name] = len(overrides)
+                assets[f"fnf:sprite/{name}/{normalize_string(sprite_name)}"] = model
         else:
             model = self.create_sprite(
                 texture_name, 0, 0, original.width, original.height, size, scale
             )
-            model_name = generate(name, model)
-            overrides[model_name] = len(overrides)
+            assets[f"fnf:sprite/{name}"] = model
 
-    @staticmethod
+        return assets
+
     def create_sprite(
+        self,
         texture: str,
         x: float,
         y: float,
