@@ -3,7 +3,7 @@
   "require": [
     "beet.contrib.inline_function",
     "beet.contrib.inline_function_tag",
-    "fnf.dundervar"
+    "beet.contrib.dundervar"
   ],
   "data_pack": {
     "load": ["src", "vendor/wasd_arithmetic"]
