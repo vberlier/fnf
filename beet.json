@@ -77,7 +77,10 @@
         }
       },
       {
-        "match": ["fnf:sprite/arrows/*_hold_end0000"],
+        "match": [
+          "fnf:sprite/arrows/*_hold_end0000",
+          "fnf:sprite/arrows/*_end_hold0000"
+        ],
         "head": {
           "scale": [2, 2, 2],
           "rotation": [0, 180, 0],
@@ -89,7 +92,8 @@
       {
         "match": [
           "fnf:sprite/arrows/*_hold_piece0000",
-          "fnf:sprite/arrows/*_hold_end0000"
+          "fnf:sprite/arrows/*_hold_end0000",
+          "fnf:sprite/arrows/*_end_hold0000"
         ],
         "factor": 3
       }
