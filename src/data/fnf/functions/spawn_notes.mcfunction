@@ -1,4 +1,4 @@
-#!from "sprite.mcfunction" import new_sprite
+#!from "note.mcfunction" import new_note
 
 #!set tick = generate_objective("tick")
 
@@ -12,8 +12,7 @@ execute if score @s __tick__ matches {{ node.range }} run function {{ node.child
 
 #!if notes | length == 1
 execute if score @s __tick__ matches {{ node.range }}
-    at @e[tag={{ notes[0].anchor_tag }}]
-    run {{ new_sprite(notes[0].sprite_name,  "~ ~-8 ~0.1", "fnf.note", "fnf.note" ~ notes[0].arrow) }}
+    run {{ new_note(notes[0]) }}
 
 #!else
 #!set chord_function = generate_chord(notes)
@@ -21,8 +20,7 @@ execute if score @s __tick__ matches {{ node.range }} run function {{ chord_func
 
 #!function chord_function
 #!for note in notes
-execute at @e[tag={{ note.anchor_tag }}]
-    run {{ new_sprite(note.sprite_name,  "~ ~-8 ~0.1", "fnf.note", "fnf.note" ~ note.arrow) }}
+#!print new_note(note)
 #!endfor
 #!endfunction
 

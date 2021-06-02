@@ -20,7 +20,7 @@ execute if entity @s[tag=__wasd__] as @e[tag=__bf__] at @s run commands
         scoreboard players set @p[scores={__confirm__=-1}] __confirm__ 0
         scoreboard players set @p[scores={__confirm__=2}] __confirm__ 0
         kill @s
-        say {{ arrow }}
+        say __arrow__
         tag @p add __sustain__
 
 tag @s remove __wasd__

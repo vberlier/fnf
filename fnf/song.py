@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from itertools import groupby
-from typing import Dict, Iterator, List, Optional, cast
+from typing import Dict, Iterable, Iterator, List, Optional, cast
 
 from beet import Context, Function, JsonFile, Sound, generate_tree
 from beet.core.utils import JsonDict
@@ -11,6 +11,7 @@ ARROW_COLORS = {"left": "purple", "down": "blue", "up": "green", "right": "red"}
 
 @dataclass
 class Note:
+    song: "Song"
     tick: int
     arrow: str
     should_press: bool
@@ -33,6 +34,20 @@ class Note:
     def sprite_name(self) -> str:
         return f"fnf:sprite/arrows/{self.color}0000"
 
+    @property
+    def hold_piece_sprite_name(self) -> str:
+        return f"fnf:sprite/arrows/{self.color}_hold_piece0000"
+
+    @property
+    def hold_end_sprite_name(self) -> str:
+        if self.color == "purple":  # take into account weird typo
+            return f"fnf:sprite/arrows/pruple_end_hold0000"
+        return f"fnf:sprite/arrows/{self.color}_hold_end0000"
+
+    @property
+    def tail(self) -> Iterable[int]:
+        return range(0, int(self.hold_duration * self.song.speed) // 2 * 2, 4)
+
 
 @dataclass
 class Song:
@@ -48,6 +63,7 @@ class Song:
             for strum_time, direction, hold in section["sectionNotes"]:
                 self.notes.append(
                     Note(
+                        self,
                         int(strum_time / 1000 * 20),
                         ARROW_DIRECTIONS[direction % 4],
                         section["mustHitSection"] or direction > 3,
@@ -91,8 +107,15 @@ def beet_default(ctx: Context):
 
     ctx.template.expose(
         "generate_chord",
-        lambda notes: generate[name].path(
+        lambda notes: generate["chord"].path(
             "{hash}", hash=" ".join(note.hash_string for note in notes)
+        ),
+    )
+
+    ctx.template.expose(
+        "generate_tail",
+        lambda note: generate["tail"].path(
+            "{hash}", hash=(note.arrow, note.hold_duration)
         ),
     )
 

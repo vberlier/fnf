@@ -11,6 +11,7 @@
   "pipeline": [
     "fnf.sprite",
     "fnf.display",
+    "fnf.resize",
     "fnf.song",
     "beet.contrib.render",
     "beet.contrib.hangman",
@@ -66,6 +67,31 @@
         "head": {
           "scale": [4, 4, 4]
         }
+      },
+      {
+        "match": ["fnf:sprite/arrows/*_hold_piece0000"],
+        "head": {
+          "scale": [2, 2, 2],
+          "rotation": [1, 0, 0],
+          "translation": [16, 16, 1]
+        }
+      },
+      {
+        "match": ["fnf:sprite/arrows/*_hold_end0000"],
+        "head": {
+          "scale": [2, 2, 2],
+          "rotation": [0, 180, 0],
+          "translation": [-18.5, 7, 0]
+        }
+      }
+    ],
+    "resize": [
+      {
+        "match": [
+          "fnf:sprite/arrows/*_hold_piece0000",
+          "fnf:sprite/arrows/*_hold_end0000"
+        ],
+        "factor": 3
       }
     ],
     "song": {
