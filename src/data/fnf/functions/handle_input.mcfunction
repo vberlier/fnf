@@ -19,9 +19,11 @@ execute if entity @s[tag=__wasd__] as @e[tag=__bf__] at @s run commands
     execute as @e[tag=fnf.note, distance=..0.45, limit=1] run commands
         scoreboard players set @p[scores={__confirm__=-1}] __confirm__ 0
         scoreboard players set @p[scores={__confirm__=2}] __confirm__ 0
-        kill @s
-        say __arrow__
         tag @p add __sustain__
+
+        execute if entity @s[tag=!fnf.played] run commands
+            tag @s add fnf.played
+            data modify entity @s ArmorItems[3] set value {}
 
 tag @s remove __wasd__
 

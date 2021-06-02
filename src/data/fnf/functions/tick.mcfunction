@@ -28,6 +28,7 @@ execute as @p[nbt={RootVehicle: {}}] at @s run commands
 
     function fnf:handle_input
     function fnf:animate_arrows
+    function fnf:animate_bf
 
 execute as @p[nbt=!{RootVehicle: {}}] at @s run commands
     execute if entity @s[tag=fnf.riding] run commands
